@@ -7,3 +7,5 @@ TestMail 免费版不支持在线预览邮件，只能支持在线预览 json，
 https://testmail-viewer.tbxark.workers.dev/?apikey=#YOUR_API_KEY&namespace=#YOUR_NAME_SPACE
 
 ```
+
+![](./preview.png)
