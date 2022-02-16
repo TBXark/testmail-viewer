@@ -32,6 +32,7 @@ if (token && namespace){
         for (const d of data.emails) {
             d.from = HTMLEncode(d.from) 
             d.subject = HTMLEncode(d.subject) 
+            d.text = HTMLEncode(d.text) 
             let item = \`
                 <a href="#" class="list-group-item list-group-item-action  py-3 lh-tight" id="\${d.oid}">
                     <div class="d-flex w-100 align-items-center justify-content-between">
@@ -52,7 +53,9 @@ if (token && namespace){
         for (const d of data.emails) {
             let item = document.getElementById(d.oid)
             item.addEventListener('click', () => {
-                d.text = HTMLEncode(d.text) 
+                if (item.classList.contains('active')) {
+                    return
+                }
                 Array.from(document.getElementsByClassName('list-group-item')).forEach(element => {
                     element.classList.remove('active')
                 });
