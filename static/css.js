@@ -43,4 +43,8 @@ main {
 #mail-container {
   padding: 20px;
 }
+
+.form-control {
+  margin-bottom: 4px;
+}
 `

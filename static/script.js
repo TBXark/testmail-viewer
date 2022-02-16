@@ -6,18 +6,23 @@ const namespace = url.searchParams.get('namespace')
 const container = document.getElementsByClassName('scrollarea')[0]
 const icontainer = document.getElementById('mail-container')
 
-const HTMLEncode = (html) => {
-    return encodeURIComponent(html)
-}
-    
+const tokenContainer = document.getElementById('apikey')
+const namespaceContainer = document.getElementById('namespace')
+
+tokenContainer.value = token
+namespaceContainer.value =  namespace
+
+
+document.getElementById("refresh-button").addEventListener('click', () => {
+    const apikey = tokenContainer.value
+    const namespace = namespaceContainer.value
+    document.location = \`/?apikey=\${apikey}&namespace=\${namespace}\`
+})
+
 
 const tips = 'Tips:  https://testmail-viewer.tbxark.workers.dev/?apikey=#YOUR_API_KEY&namespace=#YOUR_NAME_SPACE'
 
-if (!token) {
-    icontainer.innerHTML = '<strong>Missing apikey</strong><br>' + tips
-} else if (!namespace) {
-    icontainer.innerHTML = '<strong>Missing namespace</strong><br>' + tips
-} else {
+if (token && namespace){
     fetch(\`/api/emails?apikey=\${token}&namespace=\${namespace}\`)
     .then(response => response.json())
     .then( data => {
@@ -75,5 +80,4 @@ if (!token) {
   })
 }
 `
-
 
