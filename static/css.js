@@ -40,7 +40,7 @@ main {
 .fw-semibold { font-weight: 600; }
 .lh-tight { line-height: 1.25; }
 
-#iframe-container {
+#mail-container {
   padding: 20px;
 }
 `

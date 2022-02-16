@@ -50,7 +50,7 @@ if (!token) {
                 });
                 item.classList.add('active')
                 icontainer.innerHTML = \`
-                <div style="width=100%;height:100%;margin:20px">
+                <div style="width=100%;height:100%;">
                     <h3>\${d.subject}</h3>
                     <hr />
                     <h6>
