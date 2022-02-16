@@ -32,29 +32,29 @@ fetch(\`/api/emails?apikey=\${token}&namespace=\${namespace}\`)
     for (const d of data.emails) {
         let item = document.getElementById(d.oid)
         item.addEventListener('click', () => {
-        //document.title = d.subject
-        Array.from(document.getElementsByClassName('list-group-item')).forEach(element => {
-            element.classList.remove('active')
-        });
-        item.classList.add('active')
-        icontainer.innerHTML = \`
-        <div>
-            <h3>\${d.subject}</h3>
-            <hr />
-            <h6>
-            <strong>From : </strong> \${d.from} 
-            </h6>
-            <h6>
-            <strong>To : </strong> \${d.to} 
-            </h6>
-            <h6>
-            <strong>Date : </strong> \${new Date(d.date).toISOString()} 
-            </h6>
-            <hr />
-            <p>
-            \${d.text}
-            </p>
-        </div>\`
+            //document.title = d.subject
+            Array.from(document.getElementsByClassName('list-group-item')).forEach(element => {
+                element.classList.remove('active')
+            });
+            item.classList.add('active')
+            icontainer.innerHTML = \`
+            <div>
+                <h3>\${d.subject}</h3>
+                <hr />
+                <h6>
+                <strong>From : </strong> \${d.from} 
+                </h6>
+                <h6>
+                <strong>To : </strong> \${d.to} 
+                </h6>
+                <h6>
+                <strong>Date : </strong> \${new Date(d.date).toISOString()} 
+                </h6>
+                <hr />
+                <p>
+                \${d.text}
+                </p>
+            </div>\`
         })
     }
     
