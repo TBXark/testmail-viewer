@@ -45,7 +45,6 @@ if (token && namespace){
         for (const d of data.emails) {
             let item = document.getElementById(d.oid)
             item.addEventListener('click', () => {
-                //document.title = d.subject
                 Array.from(document.getElementsByClassName('list-group-item')).forEach(element => {
                     element.classList.remove('active')
                 });
@@ -64,8 +63,17 @@ if (token && namespace){
                     <strong>Date : </strong> \${new Date(d.date).toISOString()} 
                     </h6>
                     <hr />
-                    <iframe src="data:text/html,\${encodeURIComponent(d.html)}" style="width:100%;height:100%"></iframe>
+                    <div style="width:100%;height:100%" id="content-\${d.oid}">
+                        <div class="alert alert-danger" role="alert" id="alert-\${d.oid}">Click to show blocked content</div>
+                        <p style="font-size:16px;white-space: pre-line;">\${d.text}</p>
+                    </div>
                 </div>\`
+
+                document.getElementById(\`alert-\${d.oid}\`).addEventListener('click', () => {
+                    document.getElementById(\`content-\${d.oid}\`).innerHTML = \`
+                        <iframe src="data:text/html,\${encodeURIComponent(d.html)}" style="width:100%;height:100%"></iframe>
+                    \`
+                })
             })
         }
         

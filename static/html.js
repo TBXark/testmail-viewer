@@ -17,8 +17,8 @@ export default `
         
       </div>
       <div class="d-flex flex-column align-items-stretch flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
-        <input id="apikey" class="form-control"  placeholder="xxxxx-xxxxx-xxxx-xxxx-xxxxxxxxxx">
-        <input id="namespace"  class="form-control"  placeholder="xxxx">
+        <input id="apikey" class="form-control"  placeholder="apikey: xxxxx-xxxxx-xxxx-xxxx-xxxxxxxxxx">
+        <input id="namespace"  class="form-control"  placeholder="namespace: xxxx">
         <button id="refresh-button" class="w-100 btn btn-lg btn-dark" type="submit">Load</button>
       </div>
       <div class="list-group list-group-flush border-bottom scrollarea">
