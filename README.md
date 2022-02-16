@@ -13,4 +13,4 @@ https://testmail-viewer.tbxark.workers.dev
 https://testmail-viewer.tbxark.workers.dev/?apikey=#YOUR_API_KEY&namespace=#YOUR_NAME_SPACE
 ```
 
-![](./preview.png)
+![](./preview.jpeg)
