@@ -32,7 +32,7 @@ fetch(\`/api/emails?apikey=\${token}&namespace=\${namespace}\`)
     for (const d of data.emails) {
         let item = document.getElementById(d.oid)
         item.addEventListener('click', () => {
-        document.title = d.subject
+        //document.title = d.subject
         Array.from(document.getElementsByClassName('list-group-item')).forEach(element => {
             element.classList.remove('active')
         });
