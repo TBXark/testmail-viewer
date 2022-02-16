@@ -24,7 +24,7 @@ if (token && namespace){
     .then( data => {
         let items = ''
         for (const d of data.emails) {
-            d.from = d.from.replace('<', '[').replace('>', ']')
+            d.from = d.from.replace('<', '&lt;').replace('>', '&gt;')
             let item = \`
                 <a href="#" class="list-group-item list-group-item-action  py-3 lh-tight" id="\${d.oid}">
                     <div class="d-flex w-100 align-items-center justify-content-between">
