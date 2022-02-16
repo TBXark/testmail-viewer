@@ -1,0 +1,8 @@
+name = "testmail-viewer"
+type = "webpack"
+
+zone_id = ""
+account_id = ""
+workers_dev = true
+route = ""
+compatibility_date = "2022-02-07"
