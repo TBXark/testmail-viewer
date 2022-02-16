@@ -12,15 +12,11 @@ const namespaceContainer = document.getElementById('namespace')
 tokenContainer.value = token
 namespaceContainer.value =  namespace
 
-
 document.getElementById("refresh-button").addEventListener('click', () => {
     const apikey = tokenContainer.value
     const namespace = namespaceContainer.value
     document.location = \`/?apikey=\${apikey}&namespace=\${namespace}\`
 })
-
-
-const tips = 'Tips:  https://testmail-viewer.tbxark.workers.dev/?apikey=#YOUR_API_KEY&namespace=#YOUR_NAME_SPACE'
 
 if (token && namespace){
     fetch(\`/api/emails?apikey=\${token}&namespace=\${namespace}\`)
