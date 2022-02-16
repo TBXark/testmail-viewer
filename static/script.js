@@ -12,6 +12,12 @@ const namespaceContainer = document.getElementById('namespace')
 tokenContainer.value = token
 namespaceContainer.value =  namespace
 
+const HTMLEncode = (text) => { 
+    const temp = document.createElement("div")
+    temp.textContent = text
+    return temp.innerHTML
+} 
+
 document.getElementById("refresh-button").addEventListener('click', () => {
     const apikey = tokenContainer.value
     const namespace = namespaceContainer.value
@@ -24,7 +30,8 @@ if (token && namespace){
     .then( data => {
         let items = ''
         for (const d of data.emails) {
-            d.from = d.from.replace('<', '&lt;').replace('>', '&gt;')
+            d.from = HTMLEncode(d.from) 
+            d.subject = HTMLEncode(d.subject) 
             let item = \`
                 <a href="#" class="list-group-item list-group-item-action  py-3 lh-tight" id="\${d.oid}">
                     <div class="d-flex w-100 align-items-center justify-content-between">
@@ -45,6 +52,7 @@ if (token && namespace){
         for (const d of data.emails) {
             let item = document.getElementById(d.oid)
             item.addEventListener('click', () => {
+                d.text = HTMLEncode(d.text) 
                 Array.from(document.getElementsByClassName('list-group-item')).forEach(element => {
                     element.classList.remove('active')
                 });
