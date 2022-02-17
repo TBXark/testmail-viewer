@@ -75,7 +75,10 @@ if (token && namespace){
                     </h6>
                     <hr />
                     <div style="width:100%;height:100%" id="content-\${d.oid}">
-                        <div class="alert alert-danger" role="alert" id="alert-\${d.oid}">Click to show blocked content</div>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            Click <strong id="alert-\${d.oid}"><u style="cursor:default;">here</u></strong> to show blocked content
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
                         <p style="font-size:16px;white-space: pre-line;">\${d.text}</p>
                     </div>
                 </div>\`
