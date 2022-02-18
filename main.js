@@ -25,7 +25,7 @@ document.getElementById("refresh-button").addEventListener('click', () => {
 })
 
 if (token && namespace){
-    fetch(`/functions/api/emails?apikey=${token}&namespace=${namespace}`)
+    fetch(`/api/emails?apikey=${token}&namespace=${namespace}`)
     .then(response => response.json())
     .then( data => {
         let items = ''
