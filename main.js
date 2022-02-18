@@ -1,4 +1,3 @@
-
 const url = new URL(document.location.href)
 const token = url.searchParams.get('apikey')
 const namespace = url.searchParams.get('namespace')
@@ -97,4 +96,3 @@ if (token && namespace){
         }    
   })
 }
-

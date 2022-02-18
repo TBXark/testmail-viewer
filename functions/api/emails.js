@@ -1,6 +1,6 @@
-export async function onRequestGet(request) {
+export async function onRequest(context) {
   try {
-    let url = new URL(request.url)
+    let url = new URL(context.request.url)
     let token = url.searchParams.get('apikey')
     let namespace = url.searchParams.get('namespace')
     return await fetch(
