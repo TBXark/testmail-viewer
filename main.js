@@ -1,4 +1,4 @@
-export default `
+
 const url = new URL(document.location.href)
 const token = url.searchParams.get('apikey')
 const namespace = url.searchParams.get('namespace')
@@ -21,11 +21,11 @@ const HTMLEncode = (text) => {
 document.getElementById("refresh-button").addEventListener('click', () => {
     const apikey = tokenContainer.value
     const namespace = namespaceContainer.value
-    document.location = \`/?apikey=\${apikey}&namespace=\${namespace}\`
+    document.location = `/?apikey=${apikey}&namespace=${namespace}`
 })
 
 if (token && namespace){
-    fetch(\`/api/emails?apikey=\${token}&namespace=\${namespace}\`)
+    fetch(`/functions/api/emails?apikey=${token}&namespace=${namespace}`)
     .then(response => response.json())
     .then( data => {
         let items = ''
@@ -33,19 +33,19 @@ if (token && namespace){
             d.from = HTMLEncode(d.from) 
             d.subject = HTMLEncode(d.subject) 
             d.text = HTMLEncode(d.text) 
-            let item = \`
-                <a href="#" class="list-group-item list-group-item-action  py-3 lh-tight" id="\${d.oid}">
+            let item = `
+                <a href="#" class="list-group-item list-group-item-action  py-3 lh-tight" id="${d.oid}">
                     <div class="d-flex w-100 align-items-center justify-content-between">
-                    <strong class="mb-1">\${d.subject}</strong>
+                    <strong class="mb-1">${d.subject}</strong>
                     </div>
                     <div class="col-10 mb-1 small">
-                    <strong>From</strong> \${d.from} 
+                    <strong>From</strong> ${d.from} 
                     </div>
                     <div class="col-10 mb-1 small">
-                    <strong>To</strong> \${d.to} 
+                    <strong>To</strong> ${d.to} 
                     </div>
                 </a>
-            \`
+            `
             items += item
         }
         container.innerHTML = items
@@ -60,33 +60,33 @@ if (token && namespace){
                     element.classList.remove('active')
                 });
                 item.classList.add('active')
-                icontainer.innerHTML = \`
+                icontainer.innerHTML = `
                 <div style="width=100%;height:100%;">
-                    <h3>\${d.subject}</h3>
+                    <h3>${d.subject}</h3>
                     <hr />
                     <h6>
-                    <strong>From : </strong> \${d.from} 
+                    <strong>From : </strong> ${d.from} 
                     </h6>
                     <h6>
-                    <strong>To : </strong> \${d.to} 
+                    <strong>To : </strong> ${d.to} 
                     </h6>
                     <h6>
-                    <strong>Date : </strong> \${new Date(d.date).toISOString()} 
+                    <strong>Date : </strong> ${new Date(d.date).toISOString()} 
                     </h6>
                     <hr />
-                    <div style="width:100%;height:100%" id="content-\${d.oid}">
+                    <div style="width:100%;height:100%" id="content-${d.oid}">
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            Click <strong id="alert-\${d.oid}"><u style="cursor:default;">here</u></strong> to show blocked content
+                            Click <strong id="alert-${d.oid}"><u style="cursor:default;">here</u></strong> to show blocked content
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
-                        <p style="font-size:16px;white-space: pre-line;">\${d.text}</p>
+                        <p style="font-size:16px;white-space: pre-line;">${d.text}</p>
                     </div>
-                </div>\`
+                </div>`
 
-                document.getElementById(\`alert-\${d.oid}\`).addEventListener('click', () => {
-                    document.getElementById(\`content-\${d.oid}\`).innerHTML = \`
-                        <iframe src="data:text/html,\${encodeURIComponent(d.html)}" style="width:100%;height:100%"></iframe>
-                    \`
+                document.getElementById(`alert-${d.oid}`).addEventListener('click', () => {
+                    document.getElementById(`content-${d.oid}`).innerHTML = `
+                        <iframe src="data:text/html,${encodeURIComponent(d.html)}" style="width:100%;height:100%"></iframe>
+                    `
                 })
             })
         }
@@ -97,5 +97,4 @@ if (token && namespace){
         }    
   })
 }
-`
 
