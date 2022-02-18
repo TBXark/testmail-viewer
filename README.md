@@ -4,13 +4,13 @@
 使用下面的链接就可以直接预览邮件，支持富文本。
 
 ```
-https://testmail-viewer.tbxark.workers.dev
+https://testmail.pages.dev
 ```
 
 或者在直接在链接中附带相关参数
 
 ```
-https://testmail-viewer.tbxark.workers.dev/?apikey=#YOUR_API_KEY&namespace=#YOUR_NAME_SPACE
+https://testmail.pages.dev/?apikey=#YOUR_API_KEY&namespace=#YOUR_NAME_SPACE
 ```
 
 ![](./preview.jpeg)
