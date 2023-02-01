@@ -78,7 +78,7 @@ if (token && namespace){
                             Click <strong id="alert-${d.oid}"><u style="cursor:default;">here</u></strong> to show blocked content
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
-                        <p style="font-size:16px;white-space: pre-line;">${d.text}</p>
+                        <p style="font-size:16px;white-space: pre-line; word-break: break-word;">${d.text}</p>
                     </div>
                 </div>`
 
