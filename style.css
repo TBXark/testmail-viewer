@@ -12,7 +12,6 @@ main {
   flex-wrap: nowrap;
   height: -webkit-fill-available;
   max-height: 100vh;
-  min-width: 800px;
   overflow-x: auto;
   overflow-y: hidden;
 }
@@ -20,6 +19,7 @@ main {
 @media screen and (max-width:450px) {
   main {
     zoom: 0.8;
+    min-width: calc(100vw + 302px);
   }
 }
 
