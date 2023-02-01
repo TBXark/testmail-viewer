@@ -17,6 +17,12 @@ main {
   overflow-y: hidden;
 }
 
+@media screen and (max-width:320px) {
+  main {
+    zoom: 0.8;
+  }
+}
+
 .divider {
   flex-shrink: 0;
   width: 2px;
