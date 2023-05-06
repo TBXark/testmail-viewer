@@ -1,6 +1,6 @@
 const url = new URL(document.location.href)
-const token = url.searchParams.get('apikey')
-const namespace = url.searchParams.get('namespace')
+const token = url.searchParams.get('apikey') || localStorage.getItem('apikey')
+const namespace = url.searchParams.get('namespace') || localStorage.getItem('namespace')
 
 const container = document.getElementsByClassName('scrollarea')[0]
 const icontainer = document.getElementById('mail-container')
@@ -20,6 +20,8 @@ const HTMLEncode = (text) => {
 document.getElementById("refresh-button").addEventListener('click', () => {
     const apikey = tokenContainer.value
     const namespace = namespaceContainer.value
+    localStorage.setItem('apikey', apikey)
+    localStorage.setItem('namespace', namespace)
     document.location = `/?apikey=${apikey}&namespace=${namespace}`
 })
 
