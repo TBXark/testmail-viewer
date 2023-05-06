@@ -1,12 +1,18 @@
 export async function onRequest(context) {
   try {
-    let url = new URL(context.request.url)
-    let token = url.searchParams.get('apikey')
-    let namespace = url.searchParams.get('namespace')
+    const url = new URL(context.request.url)
+    const { apikey, namespace } = await context.request.json()
     return await fetch(
       `https://api.testmail.app/api/json?apikey=${token}&namespace=${namespace}&pretty=true`,
     )
   } catch (error) {
-    return new Response(`${err.message}\n${err.stack}`, { status: 500 })
+    return new Response(JSON.stringify({
+      error: error.message,
+    }), {
+      status: 500,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
   }
 }
