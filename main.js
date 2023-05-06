@@ -31,9 +31,6 @@ function loadMail(token, namespace) {
     }
     const req = fetch('/api/emails', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
         body: btoa(JSON.stringify({
             apikey: token,
             namespace: namespace
