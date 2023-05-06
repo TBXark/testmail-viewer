@@ -34,10 +34,10 @@ function loadMail(token, namespace) {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
+        body: btoa(JSON.stringify({
             apikey: token,
             namespace: namespace
-        })
+        }))
     })
 
     req.then(response => response.json())

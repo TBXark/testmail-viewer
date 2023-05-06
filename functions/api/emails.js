@@ -1,6 +1,7 @@
 export async function onRequest(context) {
   try {
-    const { apikey, namespace } = await context.request.json()
+    const raw = await context.request.text()
+    const { apikey, namespace } = JSON.parse(atob(raw))
     return await fetch(
       `https://api.testmail.app/api/json?apikey=${apikey}&namespace=${namespace}&pretty=true`,
     )
