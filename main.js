@@ -77,6 +77,12 @@ function renderMailDetail(d) {
             element.classList.remove('active')
         });
         item.classList.add('active')
+        const alertBar = `
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            Click <strong id="alert-${d.oid}"><u style="cursor:default;">here</u></strong> to show blocked content
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        `
         icontainer.innerHTML = `
         <div style="width=100%;height:100%;">
             <h3>${d.subject}</h3>
@@ -92,30 +98,29 @@ function renderMailDetail(d) {
             </h6>
             <hr />
             <div style="width:100%;height:100%" id="content-${d.oid}">
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    Click <strong id="alert-${d.oid}"><u style="cursor:default;">here</u></strong> to show blocked content
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
+                ${d.html ? alertBar : ''}
                 <p style="font-size:16px;white-space: pre-line; word-break: break-word;">${d.text}</p>
             </div>
         </div>
         `
-        const script = `
-        <script>
-        const links = document.querySelectorAll('a');
-        links.forEach(link => {
-          link.setAttribute('target', '_blank');
-        });
-        </script>
-        `
-        const index = d.html.indexOf('</html>')
-        d.html = d.html.slice(0, index) + script + d.html.slice(index)
-        
-        document.getElementById(`alert-${d.oid}`).addEventListener('click', () => {
-            document.getElementById(`content-${d.oid}`).innerHTML = `
-            <iframe src="data:text/html,${encodeURIComponent(d.html)}" style="width:100%;height:100%"></iframe>
-        `
-        })
+        if (d.html) {
+            const script = `
+            <script>
+            const links = document.querySelectorAll('a');
+            links.forEach(link => {
+              link.setAttribute('target', '_blank');
+            });
+            </script>
+            `
+            const index = d.html.indexOf('</html>')
+            d.html = d.html.slice(0, index) + script + d.html.slice(index)
+            document.getElementById(`alert-${d.oid}`).addEventListener('click', () => {
+                document.getElementById(`content-${d.oid}`).innerHTML = `
+                <iframe src="data:text/html,${encodeURIComponent(d.html)}" style="width:100%;height:100%"></iframe>
+            `
+            })
+        }
+       
     })
 }
 
