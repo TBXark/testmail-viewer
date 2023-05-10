@@ -7,10 +7,6 @@
 https://testmail.pages.dev
 ```
 
-或者在直接在链接中附带相关参数
+## 部署
 
-```
-https://testmail.pages.dev/?apikey=#YOUR_API_KEY&namespace=#YOUR_NAME_SPACE
-```
-
-![](./preview.jpeg)
+此项目使用 [Cloudflare Pages](https://pages.cloudflare.com/) 部署，所以你需要一个 Cloudflare 账号，然后在 Cloudflare Pages 中创建一个项目，将此项目的仓库链接填入即可。
