@@ -7,6 +7,8 @@
 https://testmail.pages.dev
 ```
 
+![](./preview.jpeg)
+
 ## 部署
 
 此项目使用 [Cloudflare Pages](https://pages.cloudflare.com/) 部署，所以你需要一个 Cloudflare 账号，然后在 Cloudflare Pages 中创建一个项目，将此项目的仓库链接填入即可。
