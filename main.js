@@ -100,6 +100,17 @@ function renderMailDetail(d) {
             </div>
         </div>
         `
+        const script = `
+        <script>
+        const links = iframe.contentDocument.querySelectorAll('a');
+        links.forEach(link => {
+          link.setAttribute('target', '_blank');
+        });
+        </script>
+        `
+        const index = d.html.indexOf('</html>')
+        d.html = d.html.slice(0, index) + script + html.slice(index)
+        
         document.getElementById(`alert-${d.oid}`).addEventListener('click', () => {
             document.getElementById(`content-${d.oid}`).innerHTML = `
             <iframe src="data:text/html,${encodeURIComponent(d.html)}" style="width:100%;height:100%"></iframe>
