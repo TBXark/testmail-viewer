@@ -102,7 +102,7 @@ function renderMailDetail(d) {
         `
         const script = `
         <script>
-        const links = iframe.contentDocument.querySelectorAll('a');
+        const links = document.querySelectorAll('a');
         links.forEach(link => {
           link.setAttribute('target', '_blank');
         });
