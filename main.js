@@ -109,7 +109,7 @@ function renderMailDetail(d) {
         </script>
         `
         const index = d.html.indexOf('</html>')
-        d.html = d.html.slice(0, index) + script + html.slice(index)
+        d.html = d.html.slice(0, index) + script + d.html.slice(index)
         
         document.getElementById(`alert-${d.oid}`).addEventListener('click', () => {
             document.getElementById(`content-${d.oid}`).innerHTML = `
