@@ -106,10 +106,10 @@ function renderMailDetail(d) {
         if (d.html) {
             const script = `
             <script>
-            const links = document.querySelectorAll('a');
-            links.forEach(link => {
-              link.setAttribute('target', '_blank');
-            });
+                const links = document.querySelectorAll('a');
+                links.forEach(link => {
+                    link.setAttribute('target', '_blank');
+                });
             </script>
             `
             const index = d.html.indexOf('</html>')
