@@ -25,6 +25,15 @@ document.getElementById("refresh-button").addEventListener('click', () => {
     loadMail(apikey, namespace)
 })
 
+for (const input of [tokenContainer, namespaceContainer]) {
+    input.onfocus = () => {
+        input.type = 'text'
+    }
+    input.onblur = () => {
+        input.type = 'password'
+    }
+}
+
 function loadMail(token, namespace) {
     if (!token || !namespace) {
         return
