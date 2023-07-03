@@ -140,7 +140,7 @@ function main() {
         loadMail(apikey, namespace)
     })
 
-    [tokenContainer].forEach(input => {
+    Array.of(tokenContainer).forEach(input => {
         input.onfocus = () => {
             input.type = 'text'
         }
