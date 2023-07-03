@@ -34,7 +34,7 @@ document.getElementById("refresh-button").addEventListener('click', () => {
     loadMail(apikey, namespace)
 })
 
-for (const input of [tokenContainer, namespaceContainer]) {
+for (const input of [tokenContainer]) {
     input.onfocus = () => {
         input.type = 'text'
     }
