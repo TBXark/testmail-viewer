@@ -1,6 +1,11 @@
+const getItemFromFragmentIdentifier = (url, key) => {
+    const hash = url.hash.substr(1)
+    const params = new URLSearchParams(hash)
+    return params.get(key)
+}
 const url = new URL(document.location.href)
-const token = url.searchParams.get('apikey') || localStorage.getItem('apikey')
-const namespace = url.searchParams.get('namespace') || localStorage.getItem('namespace')
+const token = url.searchParams.get('apikey') || getItemFromFragmentIdentifier('apikey') || localStorage.getItem('apikey')
+const namespace = url.searchParams.get('namespace') || getItemFromFragmentIdentifier('namespace') || localStorage.getItem('namespace')
 
 const container = document.getElementsByClassName('scrollarea')[0]
 const icontainer = document.getElementById('mail-container')
@@ -16,6 +21,7 @@ const HTMLEncode = (text) => {
     temp.textContent = text
     return temp.innerHTML
 }
+
 
 document.getElementById("refresh-button").addEventListener('click', () => {
     const apikey = tokenContainer.value
