@@ -1,52 +1,30 @@
-const getItemFromFragmentIdentifier = (url, key) => {
+
+function getItemFromFragmentIdentifier(url, key) {
     if (url && url.hash) {
-         const hash = url.hash.substr(1)
+        const hash = url.hash.substr(1)
         const params = new URLSearchParams(hash)
         return params.get(key)
     }
     return null
 }
-const url = new URL(document.location.href)
-const token = url.searchParams.get('apikey') || getItemFromFragmentIdentifier('apikey') || localStorage.getItem('apikey')
-const namespace = url.searchParams.get('namespace') || getItemFromFragmentIdentifier('namespace') || localStorage.getItem('namespace')
 
-const container = document.getElementsByClassName('scrollarea')[0]
-const icontainer = document.getElementById('mail-container')
+function getItemFromURL(url, key) {
+    return url.searchParams.get(key) || getItemFromFragmentIdentifier(key) || localStorage.getItem(key)
+}
 
-const tokenContainer = document.getElementById('apikey')
-const namespaceContainer = document.getElementById('namespace')
-
-tokenContainer.value = token
-namespaceContainer.value = namespace
-
-const HTMLEncode = (text) => {
+function HTMLEncode(text) {
     const temp = document.createElement("div")
     temp.textContent = text
     return temp.innerHTML
 }
 
 
-document.getElementById("refresh-button").addEventListener('click', () => {
-    const apikey = tokenContainer.value
-    const namespace = namespaceContainer.value
-    localStorage.setItem('apikey', apikey)
-    localStorage.setItem('namespace', namespace)
-    loadMail(apikey, namespace)
-})
-
-for (const input of [tokenContainer]) {
-    input.onfocus = () => {
-        input.type = 'text'
-    }
-    input.onblur = () => {
-        input.type = 'password'
-    }
-}
-
 function loadMail(token, namespace) {
     if (!token || !namespace) {
         return
     }
+    const container = document.getElementsByClassName('scrollarea')[0]
+
     const req = fetch('/api/emails', {
         method: 'POST',
         body: btoa(JSON.stringify({
@@ -86,6 +64,7 @@ function renderMailInfo(d) {
 }
 
 function renderMailDetail(d) {
+    const icontainer = document.getElementById('mail-container')
     let item = document.getElementById(d.oid)
     item.addEventListener('click', () => {
         if (item.classList.contains('active')) {
@@ -138,8 +117,40 @@ function renderMailDetail(d) {
             `
             })
         }
-       
+
     })
 }
 
-loadMail(token, namespace)
+function main() {
+    const url = new URL(document.location.href)
+    const token = getItemFromURL(url, 'apikey')
+    const namespace = getItemFromURL(url, 'namespace')
+
+    const tokenContainer = document.getElementById('apikey')
+    const namespaceContainer = document.getElementById('namespace')
+
+    tokenContainer.value = token
+    namespaceContainer.value = namespace
+
+    document.getElementById("refresh-button").addEventListener('click', () => {
+        const apikey = tokenContainer.value
+        const namespace = namespaceContainer.value
+        localStorage.setItem('apikey', apikey)
+        localStorage.setItem('namespace', namespace)
+        loadMail(apikey, namespace)
+    })
+
+    [tokenContainer].forEach(input => {
+        input.onfocus = () => {
+            input.type = 'text'
+        }
+        input.onblur = () => {
+            input.type = 'password'
+        }
+    })
+
+    loadMail(token, namespace)
+}
+
+
+main()
