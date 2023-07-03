@@ -1,7 +1,10 @@
 const getItemFromFragmentIdentifier = (url, key) => {
-    const hash = url.hash.substr(1)
-    const params = new URLSearchParams(hash)
-    return params.get(key)
+    if (url && url.hash) {
+         const hash = url.hash.substr(1)
+        const params = new URLSearchParams(hash)
+        return params.get(key)
+    }
+    return null
 }
 const url = new URL(document.location.href)
 const token = url.searchParams.get('apikey') || getItemFromFragmentIdentifier('apikey') || localStorage.getItem('apikey')
