@@ -19,7 +19,7 @@ function HTMLEncode(text) {
 }
 
 
-function loadMail(token, namespace) {
+function loadMail(token, namespace, callback) {
     if (!token || !namespace) {
         return
     }
@@ -35,6 +35,9 @@ function loadMail(token, namespace) {
 
     req.then(response => response.json())
         .then(data => {
+            if (callback) {
+                callback(data)
+            }
             container.innerHTML = data.emails.map(d => renderMailInfo(d)).join('')
             data.emails.forEach(d => renderMailDetail(d))
             if (data.emails.length > 0) {
@@ -140,6 +143,19 @@ function main() {
         loadMail(apikey, namespace)
     })
 
+    document.getElementById("title-label").addEventListener('click', () => {
+        if ("Notification" in window) {
+            // 请求浏览器授权显示通知
+            Notification.requestPermission().then(permission => {
+                if (permission === "granted") {
+                    new Notification("Mailbox", {
+                        body: "You can receive notifications when you receive new emails."
+                    })
+                }
+            });
+        }
+    })
+
     Array.of(tokenContainer).forEach(input => {
         input.onfocus = () => {
             input.type = 'text'
@@ -149,8 +165,31 @@ function main() {
         }
     })
 
-    loadMail(token, namespace)
-}
+    let lastOid = null
+    const newMessageNotification = (data) => {
+        if (data.emails.length > 0) {
+            const oid = data.emails[0].oid
+            if (lastOid !== oid) {
+                lastOid = oid
+                if ("Notification" in window) {
+                    // 请求浏览器授权显示通知
+                    Notification.requestPermission().then(permission => {
+                        if (permission === "granted") {
+                            new Notification("Mailbox", {
+                                body: "You have new emails."
+                            })
+                        }
+                    });
+                }
+            }
+        }
+    }
 
+    loadMail(token, namespace, newMessageNotification)
+
+    setInterval(() => {
+        loadMail(token, namespace, newMessageNotification)
+    }, 1000 * 60)
+}
 
 main()
