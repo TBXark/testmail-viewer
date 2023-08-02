@@ -39,7 +39,7 @@ function loadMail(token, namespace, callback) {
                 callback(data)
             }
             let lastActiveId = null
-            document.getElementsByClassName('list-group-item').forEach(element => {
+            Array.from(document.getElementsByClassName('list-group-item')).forEach(element => {
                 if (element.classList.contains('active')) {
                     lastActiveId = element.id
                 }
