@@ -38,9 +38,17 @@ function loadMail(token, namespace, callback) {
             if (callback) {
                 callback(data)
             }
+            let lastActiveId = null
+            document.getElementsByClassName('list-group-item').forEach(element => {
+                if (element.classList.contains('active')) {
+                    lastActiveId = element.id
+                }
+            })
             container.innerHTML = data.emails.map(d => renderMailInfo(d)).join('')
             data.emails.forEach(d => renderMailDetail(d))
-            if (data.emails.length > 0) {
+            if (lastActiveId != null) {
+                document.getElementById(lastActiveId).dispatchEvent(new Event('click'))
+            } else if (data.emails.length > 0) {
                 document.getElementsByClassName('list-group-item')[0].dispatchEvent(new Event('click'))
             }
         })
@@ -52,7 +60,7 @@ function renderMailInfo(d) {
     d.subject = HTMLEncode(d.subject)
     d.text = HTMLEncode(d.text)
     return `
-    <a href="#" class="list-group-item list-group-item-action  py-3 lh-tight" id="${d.oid}">
+    <a href="#" class="list-group-item list-group-item-action py-3 lh-tight" id="${d.oid}">
         <div class="d-flex w-100 align-items-center justify-content-between">
         <strong class="mb-1">${d.subject}</strong>
         </div>
