@@ -172,15 +172,13 @@ function main() {
             if (lastOid !== oid) {
                 lastOid = oid
                 if ("Notification" in window) {
-                    // 请求浏览器授权显示通知
-                    Notification.requestPermission().then(permission => {
-                        if (permission === "granted") {
-                            new Notification("Mailbox", {
-                                body: "You have new emails."
-                            })
-                        }
-                    });
+                    if (Notification.permission === "granted") {
+                        new Notification("Mailbox", {
+                            body: "You have new emails."
+                        })
+                    }
                 }
+
             }
         }
     }
