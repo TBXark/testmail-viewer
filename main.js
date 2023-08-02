@@ -187,7 +187,16 @@ function main() {
 
     setInterval(() => {
         loadMail(token, namespace, newMessageNotification)
-    }, 1000 * 60)
+    }, 1000 * 30)
+
+    if (typeof document.hidden !== "undefined") {
+        document.addEventListener("visibilitychange", () => {
+            if (document.visibilityState === "visible") {
+                loadMail(token, namespace, null)
+            }
+        });
+    }
+
 }
 
 main()
