@@ -39,7 +39,8 @@ function loadMail(token, namespace, callback) {
                 callback(data)
             }
             let lastActiveId = null
-            Array.from(document.getElementsByClassName('list-group-item')).forEach(element => {
+            const items = Array.from(document.getElementsByClassName('list-group-item'))
+            items.forEach(element => {
                 if (element.classList.contains('active')) {
                     lastActiveId = element.id
                 }
@@ -47,9 +48,12 @@ function loadMail(token, namespace, callback) {
             container.innerHTML = data.emails.map(d => renderMailInfo(d)).join('')
             data.emails.forEach(d => renderMailDetail(d))
             if (lastActiveId != null) {
-                document.getElementById(lastActiveId).dispatchEvent(new Event('click'))
+                items.forEach(element => {
+                    element.classList.remove('active')
+                });
+                document.getElementById(lastActiveId).classList.add('active')
             } else if (data.emails.length > 0) {
-                document.getElementsByClassName('list-group-item')[0].dispatchEvent(new Event('click'))
+                items[0].dispatchEvent(new Event('click'))
             }
         })
 }
@@ -74,8 +78,9 @@ function renderMailInfo(d) {
     `
 }
 
+
 function renderMailDetail(d) {
-    const icontainer = document.getElementById('mail-container')
+    const mailContainer = document.getElementById('mail-container')
     let item = document.getElementById(d.oid)
     item.addEventListener('click', () => {
         if (item.classList.contains('active')) {
@@ -91,7 +96,7 @@ function renderMailDetail(d) {
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
         `
-        icontainer.innerHTML = `
+        mailContainer.innerHTML = `
         <div style="width=100%;height:100%;">
             <h3>${d.subject}</h3>
             <hr />
@@ -179,6 +184,9 @@ function main() {
             const oid = data.emails[0].oid
             if (lastOid !== oid) {
                 lastOid = oid
+                if (document.visibilityState === "visible") {
+                    return
+                }
                 if ("Notification" in window) {
                     if (Notification.permission === "granted") {
                         new Notification("Mailbox", {
@@ -191,7 +199,7 @@ function main() {
         }
     }
 
-    loadMail(token, namespace, newMessageNotification)
+    loadMail(token, namespace, null)
 
     setInterval(() => {
         loadMail(token, namespace, newMessageNotification)
