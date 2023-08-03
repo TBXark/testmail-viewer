@@ -39,13 +39,14 @@ function loadMail(token, namespace, callback) {
                 callback(data)
             }
             let lastActiveId = null
-            const items = Array.from(document.getElementsByClassName('list-group-item'))
+            let items = Array.from(document.getElementsByClassName('list-group-item'))
             items.forEach(element => {
                 if (element.classList.contains('active')) {
                     lastActiveId = element.id
                 }
             })
             container.innerHTML = data.emails.map(d => renderMailInfo(d)).join('')
+            items = Array.from(document.getElementsByClassName('list-group-item'))
             data.emails.forEach(d => renderMailDetail(d))
             if (lastActiveId != null) {
                 items.forEach(element => {
