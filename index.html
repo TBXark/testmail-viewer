@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -30,7 +31,7 @@
       <div class="list-group list-group-flush border-bottom scrollarea">
         <a v-for="item in items" :key="item.id" :href="item.href"
           class="list-group-item list-group-item-action py-3 lh-tight" :class="{ active: item === current }"
-          @click="current = item">
+          @click="selectItem(item)">
           <div class="d-flex w-100 align-items-center justify-content-between">
             <strong class="mb-1">{{ item.subject }}</strong>
           </div>
@@ -68,14 +69,10 @@
           <p style="font-size:16px;white-space: pre-line; word-break: break-word;" v-else>
             {{ current?.text }}
           </p>
-
         </div>
       </div>
     </div>
   </main>
-  <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-    crossorigin="anonymous"></script> -->
 </body>
 <script>
   const { createApp, ref, computed } = Vue
@@ -120,6 +117,12 @@
             items.value = data.emails
             current.value = items.value[0]
           })
+      }
+
+      const selectItem = (item) => {
+        showHTML.value = false
+        showAlert.value = true
+        current.value = item
       }
 
       if (apikey.value && namespace.value) {
