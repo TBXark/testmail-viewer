@@ -44,23 +44,6 @@
       border-width: 1px 0;
     }
 
-    .scrollarea {
-      overflow-y: auto;
-    }
-
-    .fw-semibold {
-      font-weight: 600;
-    }
-
-    .lh-tight {
-      line-height: 1.25;
-    }
-
-    .mail-container {
-      padding: 20px;
-      overflow: scroll;
-    }
-
     .form-control {
       margin-bottom: 4px;
     }
@@ -71,7 +54,7 @@
   <main id="app">
     <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="width: 300px">
       <div class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
-        <span class="fs-5 fw-semibold" id="title-label">TestMail <span style="font-size: 10px;">by <a
+        <span class="fs-5 fw-semibold" style="font-weight: 600;">TestMail <span style="font-size: 10px;">by <a
               style="color: black;" href="https://github.com/TBXark/testmail-viewer">TBXark</a></span></span>
 
       </div>
@@ -82,9 +65,9 @@
           type="password">
         <button @click="loadData" class="w-100 btn btn-lg btn-dark" type="submit">Load</button>
       </div>
-      <div class="list-group list-group-flush border-bottom scrollarea">
+      <div class="list-group list-group-flush border-bottom" style="overflow-y: auto">
         <div v-for="item in items" :key="item.id" class="list-group-item list-group-item-action py-3 lh-tight"
-          :class="{ active: item === current }" @click="selectItem(item)">
+          style="line-height: 1.25" :class="{ active: item === current }" @click="selectItem(item)">
           <div class="d-flex w-100 align-items-center justify-content-between">
             <strong class="mb-1">{{ item.subject }}</strong>
           </div>
@@ -98,7 +81,7 @@
       </div>
     </div>
     <div class="divider"></div>
-    <div class="mail-container" style="width: 100%">
+    <div style="width: 100%; padding: 20px; overflow: scroll;">
       <div style="width:100%;height:100%;" v-if="current">
         <h3>{{ current?.subject }}</h3>
         <hr>
@@ -119,7 +102,7 @@
               @click="showAlert= false"></button>
           </div>
           <iframe :src="encodedHTML" style="width:100%;height:100%" v-if="showHTML"></iframe>
-          <p style="font-size:16px;white-space: pre-line; word-break: break-word;" v-else>
+          <p style="font-size:16px; white-space: pre-line; word-break: break-word;" v-else>
             {{ current?.text }}
           </p>
         </div>
