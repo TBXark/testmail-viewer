@@ -28,9 +28,8 @@
         <button @click="loadData" class="w-100 btn btn-lg btn-dark" type="submit">Load</button>
       </div>
       <div class="list-group list-group-flush border-bottom scrollarea">
-        <a v-for="item in items" :key="item.id" :href="item.href"
-          class="list-group-item list-group-item-action py-3 lh-tight" :class="{ active: item === current }"
-          @click="selectItem(item)">
+        <div v-for="item in items" :key="item.id" class="list-group-item list-group-item-action py-3 lh-tight"
+          :class="{ active: item === current }" @click="selectItem(item)">
           <div class="d-flex w-100 align-items-center justify-content-between">
             <strong class="mb-1">{{ item.subject }}</strong>
           </div>
@@ -40,7 +39,7 @@
           <div class="col-10 mb-1 small">
             <strong>To</strong> {{ item.to }}
           </div>
-        </a>
+        </div>
       </div>
     </div>
     <div class="divider"></div>
