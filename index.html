@@ -56,7 +56,7 @@
           <strong>To : </strong> {{ current?.to }}
         </h6>
         <h6>
-          <strong>Date : </strong> {{ current?.date }}
+          <strong>Date : </strong> {{ new Date(current?.date).toLocaleString() }}
         </h6>
         <hr>
         <div style="width:100%;height:100%">
