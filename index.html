@@ -125,6 +125,13 @@
     return url.searchParams.get(key) || getItemFromFragmentIdentifier(key) || localStorage.getItem(key)
   }
 
+  const encodeHTMLToBase64 = (html) => {
+    const script = '<script>document.querySelectorAll("a").forEach(link => link.setAttribute("target", "_blank"))<\/script>';
+    const index = html.indexOf('</html>');
+    html = html.slice(0, index) + script + html.slice(index);
+    return `data:text/html,${encodeURIComponent(updatedHTML)}`;
+  }
+
   createApp({
     setup() {
       const url = new URL(document.location.href)
@@ -135,7 +142,7 @@
       const showAlert = ref(true)
       const showHTML = ref(false)
       const encodedHTML = computed(() => {
-        return `data:text/html,${encodeURIComponent(current.value?.html)}`
+        return encodeHTMLToBase64(current.value?.html || '')
       })
 
       const loadData = () => {
