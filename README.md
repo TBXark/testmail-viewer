@@ -11,4 +11,11 @@ https://testmail.pages.dev
 
 ## 部署
 
-此项目使用 [Cloudflare Pages](https://pages.cloudflare.com/) 部署，所以你需要一个 Cloudflare 账号，然后在 Cloudflare Pages 中创建一个项目，将此项目的仓库链接填入即可。
+1. 此项目使用 [Cloudflare Pages](https://pages.cloudflare.com/) 部署，所以你需要一个 Cloudflare 账号。
+2. 先Fork此项目，然后在 Cloudflare Pages 中创建一个项目，选择此项目的仓库链接即可。
+
+<details>
+  <summary>Cloudflare Pages 编译配置如下</summary> 
+  <img width="940" alt="image" src="https://github.com/TBXark/testmail-viewer/assets/9513891/411995a6-e6c0-4f59-83ad-c4bf53b01b99">
+</details>
+
