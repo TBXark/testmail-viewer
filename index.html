@@ -58,7 +58,7 @@
         </h6>
         <hr>
         <div style="width:100%;height:100%">
-          <div class="alert alert-danger alert-dismissible fade show" role="alert" v-if="showAlert">
+          <div class="alert alert-danger alert-dismissible fade show" role="alert" v-if="showAlert && !showHTML">
             Click <strong @click="showHTML = true"><u style="cursor:default;">here</u></strong> to show blocked content
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
               @click="showAlert= false"></button>
