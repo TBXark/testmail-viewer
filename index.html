@@ -128,7 +128,9 @@
   const encodeHTMLToBase64 = (html) => {
     const script = '<script>document.querySelectorAll("a").forEach(link => link.setAttribute("target", "_blank"))<\/script>';
     const index = html.indexOf('</html>');
-    html = html.slice(0, index) + script + html.slice(index);
+    if (index >= 0) {
+      html = html.slice(0, index) + script + html.slice(index);
+    }
     return `data:text/html,${encodeURIComponent(updatedHTML)}`;
   }
 
