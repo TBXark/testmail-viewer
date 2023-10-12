@@ -131,7 +131,7 @@
     if (index >= 0) {
       html = html.slice(0, index) + script + html.slice(index);
     }
-    return `data:text/html,${encodeURIComponent(updatedHTML)}`;
+    return `data:text/html,${encodeURIComponent(html)}`;
   }
 
   createApp({
