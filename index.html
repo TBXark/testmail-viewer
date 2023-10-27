@@ -1,225 +1,323 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="An online preview tool for Testmail." />
+    <meta name="author" content="TBXark" />
+    <title>TestMail</title>
+    <script src="https://unpkg.com/vue@3.3.4/dist/vue.global.prod.js"></script>
+    <link
+      href="https://unpkg.com/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        min-height: 100vh;
+        min-height: -webkit-fill-available;
+      }
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="An online preview tool for Testmail." />
-  <meta name="author" content="TBXark" />
-  <title>TestMail</title>
-  <script src="https://unpkg.com/vue@3.3.4/dist/vue.global.prod.js"></script>
-  <link href="https://unpkg.com/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body {
-      min-height: 100vh;
-      min-height: -webkit-fill-available;
-    }
+      html {
+        height: -webkit-fill-available;
+      }
 
-    html {
-      height: -webkit-fill-available;
-    }
-
-    main {
-      display: flex;
-      flex-wrap: nowrap;
-      height: -webkit-fill-available;
-      max-height: 100vh;
-      overflow-x: auto;
-      overflow-y: hidden;
-    }
-
-    @media screen and (max-width:450px) {
       main {
-        zoom: 0.8;
-        min-width: calc(100vw + 302px);
+        display: flex;
+        flex-wrap: nowrap;
+        height: -webkit-fill-available;
+        max-height: 100vh;
+        overflow-x: auto;
+        overflow-y: hidden;
       }
-    }
 
-    .divider {
-      flex-shrink: 0;
-      width: 2px;
-      height: 100vh;
-      background-color: rgba(0, 0, 0, .1);
-      border: solid rgba(0, 0, 0, .15);
-      border-width: 1px 0;
-    }
+      @media screen and (max-width: 450px) {
+        main {
+          zoom: 0.8;
+          min-width: calc(100vw + 302px);
+        }
+      }
 
-    .form-control {
-      margin-bottom: 4px;
-    }
-  </style>
-</head>
+      .divider {
+        flex-shrink: 0;
+        width: 2px;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.1);
+        border: solid rgba(0, 0, 0, 0.15);
+        border-width: 1px 0;
+      }
 
-<body>
-  <main id="app">
-    <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="width: 300px">
-      <div class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
-        <span class="fs-5 fw-semibold" style="font-weight: 600;">TestMail <span style="font-size: 10px;">by <a
-              style="color: black;" href="https://github.com/TBXark/testmail-viewer">TBXark</a></span></span>
+      .form-control {
+        margin-bottom: 4px;
+      }
+    </style>
+  </head>
 
-      </div>
+  <body>
+    <main id="app">
       <div
-        class="d-flex flex-column align-items-stretch flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
-        <input v-model="namespace" class="form-control" placeholder="namespace: xxxx">
-        <input v-model="apikey" class="form-control" placeholder="apikey: xxxxx-xxxxx-xxxx-xxxx-xxxxxxxxxx"
-          type="password">
-        <button @click="loadData" class="w-100 btn btn-lg btn-dark" type="submit">Load</button>
-      </div>
-      <div class="list-group list-group-flush border-bottom" style="overflow-y: auto">
-        <div v-for="item in items" :key="item.id" class="list-group-item list-group-item-action py-3 lh-tight"
-          style="line-height: 1.25" :class="{ active: item === current }" @click="selectItem(item)">
-          <div class="d-flex w-100 align-items-center justify-content-between">
-            <strong class="mb-1">{{ item.subject }}</strong>
+        class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white"
+        style="width: 300px"
+      >
+        <div
+          class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom"
+        >
+          <span class="fs-5 fw-semibold" style="font-weight: 600"
+            >TestMail <span style="font-size: 10px"
+              >by <a
+                style="color: black"
+                href="https://github.com/TBXark/testmail-viewer"
+                >TBXark</a
+              ></span
+            ></span
+          >
+        </div>
+        <div
+          class="d-flex flex-column align-items-stretch flex-shrink-0 p-3 link-dark text-decoration-none border-bottom"
+        >
+          <input
+            v-model="namespace"
+            class="form-control"
+            placeholder="namespace: xxxx"
+          />
+          <input
+            v-model="apikey"
+            class="form-control"
+            placeholder="apikey: xxxxx-xxxxx-xxxx-xxxx-xxxxxxxxxx"
+            type="password"
+          />
+          <button
+            @click="loadData"
+            class="w-100 btn btn-lg btn-dark"
+            type="submit"
+          >
+            Load
+          </button>
+        </div>
+        <div
+          class="list-group list-group-flush border-bottom"
+          style="overflow-y: auto"
+        >
+          <div
+            v-for="item in items"
+            :key="item.id"
+            class="list-group-item list-group-item-action py-3 lh-tight"
+            style="line-height: 1.25"
+            :class="{ active: item === current }"
+            @click="selectItem(item)"
+          >
+            <div
+              class="d-flex w-100 align-items-center justify-content-between"
+            >
+              <strong class="mb-1">{{ item.subject }}</strong>
+            </div>
+            <div class="col-10 mb-1 small">
+              <strong>From</strong> {{ item.from }}
+            </div>
+            <div class="col-10 mb-1 small">
+              <strong>To</strong> {{ item.to }}
+            </div>
           </div>
-          <div class="col-10 mb-1 small">
-            <strong>From</strong> {{ item.from }}
-          </div>
-          <div class="col-10 mb-1 small">
-            <strong>To</strong> {{ item.to }}
+          <div class="d-flex justify-content-center" v-if="offset">
+            <button class="w-100 btn btn-lg" @click="loadData(offset)">
+              <p style="color: gray; font-size: small; margin: 0;">Load More</p>
+            </button> 
           </div>
         </div>
       </div>
-    </div>
-    <div class="divider"></div>
-    <div style="width: 100%; padding: 20px; overflow: scroll;">
-      <div style="width:100%;height:100%;" v-if="current">
-        <h3>{{ current?.subject }}</h3>
-        <hr>
-        <h6>
-          <strong>From : </strong> {{ current?.from }}
-        </h6>
-        <h6>
-          <strong>To : </strong> {{ current?.to }}
-        </h6>
-        <h6>
-          <strong>Date : </strong> {{ new Date(current?.date).toLocaleString() }}
-        </h6>
-        <div v-if="current?.attachments?.length || 0">
+      <div class="divider"></div>
+      <div style="width: 100%; padding: 20px; overflow: scroll">
+        <div style="width: 100%; height: 100%" v-if="current">
+          <h3>{{ current?.subject }}</h3>
+          <hr />
+          <h6><strong>From : </strong> {{ current?.from }}</h6>
+          <h6><strong>To : </strong> {{ current?.to }}</h6>
           <h6>
-            <strong>Attachments : </strong>
+            <strong>Date : </strong> {{ new Date(current?.date).toLocaleString()
+            }}
           </h6>
-          <ol>
-            <li v-for="attachment in current?.attachments" :key="attachment.cid" style="display: flex; align-items: center;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark" viewBox="0 0 16 16">
-                <path d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z"/>
-              </svg>
-              <a :href="attachment.downloadUrl" target="_blank" rel="noopener noreferrer">
-                {{ attachment.filename }} 
-              </a>
-              &nbsp;
-              <p style="margin: 0;">
-                ({{ fileSizeToString(attachment.size) }})
-              </p>
-            </li>
-          </ol>
-        </div>
-        <hr>
-        <div style="width:100%;height:100%">
-          <div class="alert alert-danger alert-dismissible fade show" role="alert" v-if="showAlert && !showHTML">
-            Click <strong @click="showHTML = true"><u style="cursor:default;">here</u></strong> to show blocked content
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
-              @click="showAlert= false"></button>
+          <div v-if="current?.attachments?.length || 0">
+            <h6>
+              <strong>Attachments : </strong>
+            </h6>
+            <ul>
+              <li
+                v-for="attachment in current?.attachments"
+                :key="attachment.cid"
+                style="display: flex; align-items: center"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-file-earmark"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M14 4.5V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h5.5L14 4.5zm-3 0A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V4.5h-2z"
+                  />
+                </svg>
+                &nbsp;
+                <a
+                  :href="attachment.downloadUrl"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {{ attachment.filename }}
+                </a>
+                &nbsp;
+                <p style="margin: 0">
+                  ({{ fileSizeToString(attachment.size) }})
+                </p>
+              </li>
+            </ul>
           </div>
-          <iframe :src="encodedHTML" style="width:100%;height:100%" v-if="showHTML"></iframe>
-          <p style="font-size:16px; white-space: pre-line; word-break: break-word;" v-else>
-            {{ current?.text }}
-          </p>
+          <hr />
+          <div style="width: 100%; height: 100%">
+            <div
+              class="alert alert-danger alert-dismissible fade show"
+              role="alert"
+              v-if="showAlert && !showHTML"
+            >
+              Click
+              <strong @click="showHTML = true"
+                ><u style="cursor: default">here</u></strong
+              >
+              to show blocked content
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="alert"
+                aria-label="Close"
+                @click="showAlert= false"
+              ></button>
+            </div>
+            <iframe
+              :src="encodedHTML"
+              style="width: 100%; height: 100%"
+              v-if="showHTML"
+            ></iframe>
+            <p
+              style="
+                font-size: 16px;
+                white-space: pre-line;
+                word-break: break-word;
+              "
+              v-else
+            >
+              {{ current?.text }}
+            </p>
+          </div>
         </div>
       </div>
-    </div>
-  </main>
-</body>
-<script>
-  const { createApp, ref, computed } = Vue
+    </main>
+  </body>
+  <script>
+    const { createApp, ref, computed } = Vue;
 
-  const getItemValue = (url, key) => {
-    const getItemFromFragmentIdentifier = (url, key) => {
-      if (url && url.hash) {
-        const hash = url.hash.substr(1)
-        const params = new URLSearchParams(hash)
-        return params.get(key)
+    const getItemValue = (url, key) => {
+      const getItemFromFragmentIdentifier = (url, key) => {
+        if (url && url.hash) {
+          const hash = url.hash.substr(1);
+          const params = new URLSearchParams(hash);
+          return params.get(key);
+        }
+        return null;
+      };
+      return (
+        url.searchParams.get(key) ||
+        getItemFromFragmentIdentifier(key) ||
+        localStorage.getItem(key)
+      );
+    };
+
+    const encodeHTMLToBase64 = (html) => {
+      const script =
+        '<script>document.querySelectorAll("a").forEach(link => link.setAttribute("target", "_blank"))<\/script>';
+      const index = html.indexOf("</html>");
+      if (index >= 0) {
+        html = html.slice(0, index) + script + html.slice(index);
       }
-      return null
-    }
-    return url.searchParams.get(key) || getItemFromFragmentIdentifier(key) || localStorage.getItem(key)
-  }
+      return `data:text/html,${encodeURIComponent(html)}`;
+    };
 
-  const encodeHTMLToBase64 = (html) => {
-    const script = '<script>document.querySelectorAll("a").forEach(link => link.setAttribute("target", "_blank"))<\/script>';
-    const index = html.indexOf('</html>');
-    if (index >= 0) {
-      html = html.slice(0, index) + script + html.slice(index);
-    }
-    return `data:text/html,${encodeURIComponent(html)}`;
-  }
+    createApp({
+      setup() {
+        const url = new URL(document.location.href);
+        const namespace = ref(getItemValue(url, "namespace"));
+        const apikey = ref(getItemValue(url, "apikey"));
+        const items = ref([]);
+        const current = ref(null);
+        const showAlert = ref(true);
+        const showHTML = ref(false);
+        const offset = ref(0);
+        const encodedHTML = computed(() => {
+          return encodeHTMLToBase64(current.value?.html || "");
+        });
 
-  createApp({
-    setup() {
-      const url = new URL(document.location.href)
-      const namespace = ref(getItemValue(url, 'namespace'))
-      const apikey = ref(getItemValue(url, 'apikey'))
-      const items = ref([])
-      const current = ref(null)
-      const showAlert = ref(true)
-      const showHTML = ref(false)
-      const encodedHTML = computed(() => {
-        return encodeHTMLToBase64(current.value?.html || '')
-      })
-
-      const loadData = () => {
-        localStorage.setItem('namespace', namespace.value)
-        localStorage.setItem('apikey', apikey.value)
-        fetch('/api/emails', {
-          method: 'POST',
-          body: btoa(JSON.stringify({
-            apikey: apikey.value,
-            namespace: namespace.value
-          }))
-        })
-          .then(response => response.json())
-          .then(data => {
-            items.value = data.emails
-            current.value = items.value[0]
+        const loadData = (_offset) => {
+          localStorage.setItem("namespace", namespace.value);
+          localStorage.setItem("apikey", apikey.value);
+          fetch("/api/emails", {
+            method: "POST",
+            body: btoa(
+              JSON.stringify({
+                apikey: apikey.value,
+                namespace: namespace.value,
+                limit: 10,
+                offset: _offset,
+              })
+            ),
           })
-      }
+            .then((response) => response.json())
+            .then((data) => {
+              if (_offset === 0) {
+                items.value = data.emails;
+                current.value = data.emails.length > 0 ? items.value[0] : null;
+              } else {
+                items.value = items.value.concat(data.emails);
+              }
+              offset.value = data.offset;
+            });
+        };
 
-      const fileSizeToString = (size) => {
-        if (size < 1000) {
-          return `${size} B`
+        const fileSizeToString = (size) => {
+          if (size < 1000) {
+            return `${size} B`;
+          }
+          if (size < 1000 * 1000) {
+            return `${(size / 1000).toFixed(2)} KB`;
+          }
+          if (size < 1000 * 1000 * 1000) {
+            return `${(size / 1000 / 1000).toFixed(2)} MB`;
+          }
+          return `${(size / 1000 / 1000 / 1000).toFixed(2)} GB`;
+        };
+
+        const selectItem = (item) => {
+          showHTML.value = false;
+          showAlert.value = true;
+          current.value = item;
+        };
+
+        if (apikey.value && namespace.value) {
+          loadData();
         }
-        if (size < 1000 * 1000) {
-          return `${(size / 1000).toFixed(2)} KB`
-        }
-        if (size < 1000 * 1000 * 1000) {
-          return `${(size / 1000 / 1000).toFixed(2)} MB`
-        }
-        return `${(size / 1000 / 1000 / 1000).toFixed(2)} GB`
-      }
 
-      const selectItem = (item) => {
-        showHTML.value = false
-        showAlert.value = true
-        current.value = item
-      }
-
-      if (apikey.value && namespace.value) {
-        loadData()
-      }
-
-      return {
-        namespace,
-        apikey,
-        items,
-        current,
-        showAlert,
-        showHTML,
-        encodedHTML,
-        loadData,
-        selectItem,
-        fileSizeToString
-      }
-    }
-  }).mount('#app')
-</script>
-
+        return {
+          namespace,
+          apikey,
+          items,
+          offset,
+          current,
+          showAlert,
+          showHTML,
+          encodedHTML,
+          loadData,
+          selectItem,
+          fileSizeToString,
+        };
+      },
+    }).mount("#app");
+  </script>
 </html>
