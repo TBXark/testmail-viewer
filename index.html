@@ -277,7 +277,7 @@
               } else {
                 items.value = items.value.concat(data.emails);
               }
-              offset.value = data.offset;
+              offset.value = data.offset + data.count;
             });
         };
 
