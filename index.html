@@ -119,8 +119,8 @@
           </div>
           <div class="d-flex justify-content-center" v-if="offset">
             <button class="w-100 btn btn-lg" @click="loadData(offset)">
-              <p style="color: gray; font-size: small; margin: 0;">Load More</p>
-            </button> 
+              <p style="color: gray; font-size: small; margin: 0">Load More</p>
+            </button>
           </div>
         </div>
       </div>
@@ -241,6 +241,10 @@
       return `data:text/html,${encodeURIComponent(html)}`;
     };
 
+    const stripHtmlTags = (html) => {
+      return html.replace(/<style>.*<\/style>/g, "").replace(/<br>/g, "\n").replace(/<[^>]*>/g, "");
+    };
+
     createApp({
       setup() {
         const url = new URL(document.location.href);
@@ -254,6 +258,15 @@
         const encodedHTML = computed(() => {
           return encodeHTMLToBase64(current.value?.html || "");
         });
+
+        const selectItem = (item) => {
+          showHTML.value = false;
+          showAlert.value = true;
+          if (!item.text && item.html) {
+            item.text = stripHtmlTags(item.html);
+          }
+          current.value = item;
+        };
 
         const loadData = (_offset) => {
           localStorage.setItem("namespace", namespace.value);
@@ -275,7 +288,7 @@
                 items.value = items.value.concat(data.emails);
               } else {
                 items.value = data.emails;
-                current.value = data.emails.length > 0 ? items.value[0] : null;
+                selectItem(data.emails.length > 0 ? items.value[0] : null);
               }
               offset.value = data.offset + data.limit;
             });
@@ -292,12 +305,6 @@
             return `${(size / 1000 / 1000).toFixed(2)} MB`;
           }
           return `${(size / 1000 / 1000 / 1000).toFixed(2)} GB`;
-        };
-
-        const selectItem = (item) => {
-          showHTML.value = false;
-          showAlert.value = true;
-          current.value = item;
         };
 
         if (apikey.value && namespace.value) {
