@@ -241,8 +241,21 @@
       return `data:text/html,${encodeURIComponent(html)}`;
     };
 
-    const stripHtmlTags = (html) => {
-      return html.replace(/<style>.*<\/style>/g, "").replace(/<br>/g, "\n").replace(/<[^>]*>/g, "");
+    const html2Text = (html) => {
+      const div = document.createElement("div");
+      div.innerHTML = html;
+      div.querySelectorAll("head, style, script").forEach((element) => element.remove());
+      div.querySelectorAll("br").forEach((br) => {
+        br.insertAdjacentHTML("afterend", "\n");
+        br.remove();
+      });
+      div.querySelectorAll("a").forEach((a) => {
+        const href = a.getAttribute("href");
+        const text = a.textContent;
+        a.insertAdjacentHTML("afterend", `${text}[${href}]`);
+        a.remove();
+      });
+      return div.textContent;
     };
 
     createApp({
@@ -263,7 +276,7 @@
           showHTML.value = false;
           showAlert.value = true;
           if (!item.text && item.html) {
-            item.text = stripHtmlTags(item.html);
+            item.text = html2Text(item.html);
           }
           current.value = item;
         };
