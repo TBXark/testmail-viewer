@@ -271,7 +271,7 @@
           })
             .then((response) => response.json())
             .then((data) => {
-              if (_offset === 0) {
+              if (_offset) {
                 items.value = items.value.concat(data.emails);
               } else {
                 items.value = data.emails;
