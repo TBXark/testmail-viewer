@@ -86,7 +86,7 @@
             type="password"
           />
           <button
-            @click="loadData"
+            @click="loadData(0)"
             class="w-100 btn btn-lg btn-dark"
             type="submit"
           >
@@ -272,10 +272,10 @@
             .then((response) => response.json())
             .then((data) => {
               if (_offset === 0) {
+                items.value = items.value.concat(data.emails);
+              } else {
                 items.value = data.emails;
                 current.value = data.emails.length > 0 ? items.value[0] : null;
-              } else {
-                items.value = items.value.concat(data.emails);
               }
               offset.value = data.offset + data.count;
             });
@@ -301,7 +301,7 @@
         };
 
         if (apikey.value && namespace.value) {
-          loadData();
+          loadData(0);
         }
 
         return {
