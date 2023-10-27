@@ -95,6 +95,19 @@
           <strong>Date : </strong> {{ new Date(current?.date).toLocaleString() }}
         </h6>
         <hr>
+        <div v-if="current?.attachments?.length || 0">
+          <h6>
+            <strong>Attachments : </strong>
+          </h6>
+          <ul>
+            <li v-for="attachment in current?.attachments" :key="attachment.cid">
+              <i class="bi bi-file-earmark"></i>
+              <a :href="attachment.downloadUrl" target="_blank" rel="noopener noreferrer">
+                {{ attachment.filename }}
+              </a>
+            </li>
+            <hr>
+        </div>
         <div style="width:100%;height:100%">
           <div class="alert alert-danger alert-dismissible fade show" role="alert" v-if="showAlert && !showHTML">
             Click <strong @click="showHTML = true"><u style="cursor:default;">here</u></strong> to show blocked content
